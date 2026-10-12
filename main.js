@@ -258,6 +258,11 @@ function setupLaunch() {
   let stars = [];
   let meteor = null;
   let ascent = false;
+  let starBoost = 0;
+  let flying = false;
+  let flightStart = 0;
+  let ascentRate = 0;
+  const FLIGHT_MS = 3000;
   let width = 0;
   let height = 0;
   const later = (fn, ms) => timers.push(setTimeout(fn, ms));
@@ -285,51 +290,69 @@ function setupLaunch() {
       speed: 0.4 + Math.random() * 1.2
     }));
   };
-  const draw = () => {
+  const smoothstep = (a, b, x) => {
+    const t = Math.max(0, Math.min(1, (x - a) / (b - a)));
+    return t * t * (3 - 2 * t);
+  };
+  const draw = (timestamp) => {
     if (!ctx) return;
+    const now = timestamp || performance.now();
     ctx.clearRect(0, 0, width, height);
+    if (flying) {
+      const t = Math.min((now - flightStart) / FLIGHT_MS, 1);
+      const ease = t * t * t;
+      rocket.style.transform = `translateY(${-150 * ease}vh)`;
+      overlay.style.setProperty('--space', smoothstep(0.38, 0.95, ease).toFixed(3));
+      overlay.style.setProperty('--cloud-move', smoothstep(0.1, 0.5, ease).toFixed(3));
+      overlay.style.setProperty('--cloud-fade', (1 - smoothstep(0.45, 0.8, ease)).toFixed(3));
+      starBoost = Math.max(starBoost, ease);
+      ascentRate = 2 + 46 * ease;
+      if (t >= 1) {
+        flying = false;
+        reachOrbit();
+      }
+    }
     const palette = ['#ffffff', '#f5f3ed', '#cfd8e3'];
     stars.forEach((star, i) => {
       star.twinkle += 0.03 * star.speed;
+      const wave = Math.sin(star.twinkle);
+      ctx.globalAlpha = (0.3 + Math.abs(wave) * 0.65 * star.depth) * (0.35 + 0.65 * starBoost);
+      ctx.fillStyle = palette[i % palette.length];
       if (ascent) {
-        star.y += (16 * star.depth) / height;
+        star.y += (ascentRate * star.depth) / height;
         if (star.y > 1.02) { star.y = -0.03; star.x = Math.random(); }
-      } else {
-        star.y += (0.14 * star.depth) / height;
-        if (star.y > 1.02) { star.y = -0.02; star.x = Math.random(); }
+        const px = star.x * width;
+        const py = star.y * height;
+        const len = (3 + ascentRate * 0.7) * star.depth;
+        ctx.fillRect(px, py - len, star.size * star.depth + 0.5, len + star.size);
+        return;
       }
+      star.y += (0.14 * star.depth) / height;
+      if (star.y > 1.02) { star.y = -0.02; star.x = Math.random(); }
       const px = star.x * width;
       const py = star.y * height;
       const radius = star.size * star.depth;
-      const wave = Math.sin(star.twinkle);
-      ctx.globalAlpha = 0.3 + Math.abs(wave) * 0.65 * star.depth;
-      ctx.fillStyle = palette[i % palette.length];
-      if (ascent) {
-        const len = 14 * star.depth;
-        ctx.fillRect(px, py - len, radius + 0.5, len + star.size);
-      } else {
+      ctx.beginPath();
+      ctx.arc(px, py, radius, 0, 7);
+      ctx.fill();
+      if (star.size > 1.35 && wave > 0.86) {
+        const flare = (wave - 0.86) / 0.14;
+        ctx.globalAlpha = flare * star.depth;
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 0.7;
+        const arm = radius * 4.5 * flare + 2;
+        ctx.beginPath();
+        ctx.moveTo(px - arm, py);
+        ctx.lineTo(px + arm, py);
+        ctx.moveTo(px, py - arm);
+        ctx.lineTo(px, py + arm);
+        ctx.stroke();
+        ctx.shadowBlur = 9;
+        ctx.shadowColor = 'rgba(245,243,237,.9)';
         ctx.beginPath();
         ctx.arc(px, py, radius, 0, 7);
         ctx.fill();
-        if (star.size > 1.35 && wave > 0.86) {
-          const flare = (wave - 0.86) / 0.14;
-          ctx.globalAlpha = flare * star.depth;
-          ctx.strokeStyle = '#ffffff';
-          ctx.lineWidth = 0.7;
-          const arm = radius * 4.5 * flare + 2;
-          ctx.beginPath();
-          ctx.moveTo(px - arm, py);
-          ctx.lineTo(px + arm, py);
-          ctx.moveTo(px, py - arm);
-          ctx.lineTo(px, py + arm);
-          ctx.stroke();
-          ctx.shadowBlur = 9;
-          ctx.shadowColor = 'rgba(245,243,237,.9)';
-          ctx.beginPath();
-          ctx.arc(px, py, radius, 0, 7);
-          ctx.fill();
-          ctx.shadowBlur = 0;
-        }
+        ctx.shadowBlur = 0;
       }
     });
     if (!ascent) {
@@ -386,6 +409,9 @@ function setupLaunch() {
   };
   const reachOrbit = () => {
     ascent = false;
+    ascentRate = 0;
+    overlay.style.setProperty('--space', '1');
+    overlay.style.setProperty('--cloud-fade', '0');
     overlay.classList.add('orbit');
   };
   const ignite = () => {
@@ -395,7 +421,8 @@ function setupLaunch() {
     tick('LIFTOFF');
     overlay.classList.add('lift-off');
     ascent = true;
-    later(reachOrbit, 2500);
+    flightStart = performance.now();
+    flying = true;
   };
   const open = () => {
     clearTimers();
@@ -410,6 +437,16 @@ function setupLaunch() {
     resize();
     makeStars();
     meteor = null;
+    starBoost = 0;
+    flying = false;
+    ascentRate = 0;
+    overlay.style.setProperty('--space', '0');
+    overlay.style.setProperty('--cloud-move', '0');
+    overlay.style.setProperty('--cloud-fade', '1');
+    if (rocket) {
+      rocket.style.transform = '';
+      rocket.style.opacity = reduced ? '0' : '';
+    }
     if (ctx) {
       if (raf) cancelAnimationFrame(raf);
       raf = requestAnimationFrame(draw);
@@ -427,12 +464,17 @@ function setupLaunch() {
   };
   const close = () => {
     clearTimers();
+    flying = false;
     overlay.classList.remove('open', 'orbit', 'lift-off', 'flame-on', 'ignition');
     overlay.setAttribute('aria-hidden', 'true');
     countdown.classList.remove('tick');
     document.body.style.overflow = '';
+    overlay.style.removeProperty('--space');
+    overlay.style.removeProperty('--cloud-move');
+    overlay.style.removeProperty('--cloud-fade');
     if (rocket) {
       rocket.style.transition = 'none';
+      rocket.style.transform = '';
       void rocket.offsetWidth;
       rocket.style.transition = '';
     }
