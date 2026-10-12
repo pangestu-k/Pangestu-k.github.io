@@ -25,7 +25,7 @@
       "location": "Tangerang, Indonesia",
       "description": "Software application development across frontend and backend. Specific client work is omitted until approved for public sharing.",
       "highlights": [],
-      "stack": []
+      "stack": ["Golang", "Echo", "Laravel", "React.js", "Next.js", "PostgreSQL"]
     },
     {
       "company": "PT Global 7 Teknologi",
@@ -34,7 +34,7 @@
       "location": "Depok, Indonesia",
       "description": "Backend development for AYOSCAN, including transaction-related services and third-party integrations.",
       "highlights": ["Developed REST APIs, background queues, and scheduled jobs", "Worked on Xendit payment gateway and Zipay e-money integrations", "Implemented transaction callbacks and transaction data mapping"],
-      "stack": ["REST API", "Payment integrations", "Queues", "Cron jobs"]
+      "stack": ["Laravel", "Node.js", "PostgreSQL", "MySQL", "Xendit"]
     },
     {
       "company": "PT Satu Visi Potensia",
@@ -43,7 +43,7 @@
       "location": "Jakarta, Indonesia",
       "description": "Contributed backend services for educational and coaching-related products.",
       "highlights": ["Built REST APIs for Reach ASA", "Worked on ASA Platform v2 and ASA Panel v3", "Supported backend development for Coaching Tracker"],
-      "stack": ["REST API", "Backend development"]
+      "stack": ["Laravel", "Node.js", "PostgreSQL", "MySQL"]
     },
     {
       "company": "CV IDS Consultant",
@@ -52,7 +52,7 @@
       "location": "Bogor, Indonesia",
       "description": "Backend development in an education technology environment supporting online learning.",
       "highlights": [],
-      "stack": []
+      "stack": ["PHP", "Laravel", "Node.js", "MySQL", "PostgreSQL"]
     }
   ],
   "skills": [
@@ -63,7 +63,66 @@
     {"label": "Frontend", "items": ["React", "Svelte", "Next.js", "Vite", "TanStack", "Tailwind CSS", "Ant Design", "shadcn/ui", "Chakra UI"]},
     {"label": "Cloud & DevOps", "items": ["VPS Administration", "Nginx", "systemd", "Dokploy", "Docker", "Self-hosted Deployment", "Umami Analytics"]}
   ],
-  "projects": [],
+  "projects": [
+    {
+      "name": "Vtuberspace",
+      "type": "News Portal & Database",
+      "url": "https://vtuberspace.id",
+      "description": "Community-driven VTuber news portal and database covering the Indonesian VTuber scene.",
+      "detail": "A community-run news portal covering the Indonesian VTuber scene, doubling as a crowd-sourced database of VTubers across Indonesia. Content is managed through Google Sheets synchronization, so the community can keep the portal and database up to date without a dedicated admin panel.",
+      "features": [
+        "News portal for the Indonesian VTuber community",
+        "Crowd-sourced database of VTubers across Indonesia",
+        "Content pipeline synced from Google Sheets",
+        "Backend built with clean architecture"
+      ],
+      "stack": ["Golang", "Echo", "GORM", "PostgreSQL", "React.js", "Next.js", "Google Sheets Sync", "Clean Architecture"]
+    },
+    {
+      "name": "Edunara LMS",
+      "type": "Learning Management System",
+      "url": "https://app.edunara.id",
+      "description": "LMS that helps schools run teaching and learning, from student registration to report cards.",
+      "detail": "A learning management system built for schools to run their academic activities end to end — from student registration and enrollment to grading and report card generation — with online payment support and containerized deployment.",
+      "features": [
+        "Student registration and enrollment",
+        "Teaching and learning activity management",
+        "Grading and report card generation",
+        "Online payment via payment gateway",
+        "Containerized deployment with Docker and Dokploy"
+      ],
+      "stack": ["Golang", "Echo", "GORM", "PostgreSQL", "React.js", "Vite", "TanStack", "Docker", "Dokploy", "Payment Gateway"]
+    },
+    {
+      "name": "Pesanin",
+      "type": "QR Restaurant Ordering",
+      "url": "",
+      "description": "QR-based ordering for restaurants with stock and table management in one place.",
+      "detail": "A QR-code ordering application for restaurants. Guests order directly from their table while staff manage stock, tables, and floor availability in real time — from spotting empty tables to tracking incoming orders and payments.",
+      "features": [
+        "QR-based ordering directly from the table",
+        "Stock management",
+        "Table and floor management with availability overview",
+        "Real-time updates via websockets",
+        "Payment gateway integration"
+      ],
+      "stack": ["Laravel", "React.js", "PostgreSQL", "WebSockets", "Payment Gateway"]
+    },
+    {
+      "name": "Bale Lelang",
+      "type": "Auction Platform",
+      "url": "https://balelelang.btn.co.id",
+      "description": "Asset auction platform built for Bank BTN, from browsing to purchase.",
+      "detail": "An auction application built for Bank BTN's asset auction needs. Bidders can browse auction assets, favorite the ones they like, mark their interest, and follow the flow through to purchase — powered by an event-driven microservice architecture.",
+      "features": [
+        "Asset browsing, favoriting, and interest marking",
+        "Auction flow from bidding to purchase",
+        "Event-driven microservices with NATS",
+        "Change-data-capture sync with Debezium"
+      ],
+      "stack": ["Golang", "Echo", "GORM", "PostgreSQL", "Microservices", "NATS", "Debezium", "React.js", "Next.js", "Ant Design"]
+    }
+  ],
   "education": [
     {"school": "STTI NIIT (I-Tech)", "program": "Informatics Engineering", "period": "2025 — 2026"},
     {"school": "STIE Dharma Negara", "program": "Informatics Engineering", "period": "2021 — 2025"},

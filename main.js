@@ -53,8 +53,33 @@ function renderExperience(items) {
     root.append(article);
   });
 }
+function openProjectModal(project, modal) {
+  qs('#modal-kind').textContent = project.type || 'Project';
+  qs('#modal-title').textContent = project.name;
+  qs('#modal-description').textContent = project.detail || project.description;
+  const features = project.features || [];
+  qs('#modal-features').replaceChildren(...features.map(item => create('li', '', item)));
+  qs('#modal-features-wrap').hidden = !features.length;
+  const stack = qs('#modal-stack');
+  stack.replaceChildren(...(project.stack || []).map(item => create('span', 'pill', item)));
+  const links = qs('#modal-links');
+  links.replaceChildren();
+  if (project.url) links.append(externalLink(project.url, 'Visit project ↗'));
+  if (project.repository) links.append(externalLink(project.repository, 'Source code ↗'));
+  if (!links.childNodes.length) links.append(create('span', 'pill', 'Coming soon'));
+  if (!modal.open) modal.showModal();
+}
+function setupProjectModal() {
+  const modal = qs('#project-modal');
+  if (!modal) return;
+  qs('#modal-close').addEventListener('click', () => modal.close());
+  modal.addEventListener('click', event => {
+    if (event.target === modal) modal.close();
+  });
+}
 function renderProjects(projects) {
   const root = qs('#projects-list');
+  const modal = qs('#project-modal');
   if (!projects.length) {
     const empty = create('div', 'empty-projects');
     append(empty, create('strong', '', 'Selected projects, coming soon.'), create('p', '', 'This section is intentionally left without fictional case studies. Add your own public or approved projects to data/content.json and they will appear here.'));
@@ -63,6 +88,10 @@ function renderProjects(projects) {
   }
   projects.forEach((project, i) => {
     const card = create('article', 'project-card');
+    card.tabIndex = 0;
+    card.setAttribute('role', 'button');
+    card.setAttribute('aria-haspopup', 'dialog');
+    card.setAttribute('aria-label', `Open ${project.name} details`);
     const top = create('div', 'project-top');
     append(top, create('span', 'project-number', String(i + 1).padStart(2, '0')), create('span', 'project-kind', project.type || 'Project'));
     append(card, top, create('h3', 'project-title', project.name), create('p', 'project-description', project.description));
@@ -74,7 +103,19 @@ function renderProjects(projects) {
     const links = create('div', 'project-links');
     if (project.url) links.append(externalLink(project.url, 'Visit project ↗'));
     if (project.repository) links.append(externalLink(project.repository, 'Source code ↗'));
-    if (links.childNodes.length) card.append(links);
+    const details = create('button', 'project-details');
+    details.type = 'button';
+    details.append(document.createTextNode('Details'), create('span', '', '→'));
+    links.append(details);
+    links.querySelectorAll('a').forEach(anchor => anchor.addEventListener('click', event => event.stopPropagation()));
+    card.addEventListener('click', () => openProjectModal(project, modal));
+    card.addEventListener('keydown', event => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        openProjectModal(project, modal);
+      }
+    });
+    card.append(links);
     root.append(card);
   });
 }
@@ -163,6 +204,7 @@ function setupNavbar() {
 async function init() {
   setupTheme();
   setupNavbar();
+  setupProjectModal();
   qs('#year').textContent = new Date().getFullYear();
   try {
     const response = await fetch('./data/content.json', { cache: 'no-store' });
