@@ -65,7 +65,5 @@
     {"school": "STTI NIIT (I-Tech)", "program": "Software Engineering", "period": "2021 — 2026"},
     {"school": "SMK Wikrama 1 Garut", "program": "Vocational education", "period": "2018 — 2021"}
   ],
-  "recognition": [
-    {"title": "1st Place — City-level Software Application Competition (LKS)", "year": "2019"}
-  ]
+  "recognition": []
 }

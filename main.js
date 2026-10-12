@@ -103,7 +103,26 @@ function renderEducation(education, recognition) {
     awards.append(block);
   });
 }
+function setupTheme() {
+  const toggle = qs('#theme-toggle');
+  if (!toggle) return;
+  const root = document.documentElement;
+  const meta = qs('meta[name="theme-color"]');
+  const apply = (theme) => {
+    root.setAttribute('data-theme', theme);
+    try { localStorage.setItem('theme', theme); } catch (e) {}
+    const dark = theme === 'dark';
+    if (meta) meta.setAttribute('content', dark ? '#151713' : '#f5f3ed');
+    toggle.setAttribute('aria-pressed', String(dark));
+    toggle.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
+  };
+  toggle.addEventListener('click', () => {
+    apply(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+  });
+  apply(root.getAttribute('data-theme') || 'light');
+}
 async function init() {
+  setupTheme();
   qs('#year').textContent = new Date().getFullYear();
   try {
     const response = await fetch('./data/content.json', { cache: 'no-store' });
