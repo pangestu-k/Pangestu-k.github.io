@@ -290,7 +290,7 @@ function setupLaunch() {
     ctx.clearRect(0, 0, width, height);
     const palette = ['#ffffff', '#f5f3ed', '#cfd8e3'];
     stars.forEach((star, i) => {
-      star.twinkle += 0.02 * star.speed;
+      star.twinkle += 0.03 * star.speed;
       if (ascent) {
         star.y += (16 * star.depth) / height;
         if (star.y > 1.02) { star.y = -0.03; star.x = Math.random(); }
@@ -300,39 +300,79 @@ function setupLaunch() {
       }
       const px = star.x * width;
       const py = star.y * height;
-      ctx.globalAlpha = 0.3 + Math.abs(Math.sin(star.twinkle)) * 0.65 * star.depth;
+      const radius = star.size * star.depth;
+      const wave = Math.sin(star.twinkle);
+      ctx.globalAlpha = 0.3 + Math.abs(wave) * 0.65 * star.depth;
       ctx.fillStyle = palette[i % palette.length];
       if (ascent) {
         const len = 14 * star.depth;
-        ctx.fillRect(px, py - len, star.size * star.depth + 0.5, len + star.size);
+        ctx.fillRect(px, py - len, radius + 0.5, len + star.size);
       } else {
         ctx.beginPath();
-        ctx.arc(px, py, star.size * star.depth, 0, 7);
+        ctx.arc(px, py, radius, 0, 7);
         ctx.fill();
+        if (star.size > 1.35 && wave > 0.86) {
+          const flare = (wave - 0.86) / 0.14;
+          ctx.globalAlpha = flare * star.depth;
+          ctx.strokeStyle = '#ffffff';
+          ctx.lineWidth = 0.7;
+          const arm = radius * 4.5 * flare + 2;
+          ctx.beginPath();
+          ctx.moveTo(px - arm, py);
+          ctx.lineTo(px + arm, py);
+          ctx.moveTo(px, py - arm);
+          ctx.lineTo(px, py + arm);
+          ctx.stroke();
+          ctx.shadowBlur = 9;
+          ctx.shadowColor = 'rgba(245,243,237,.9)';
+          ctx.beginPath();
+          ctx.arc(px, py, radius, 0, 7);
+          ctx.fill();
+          ctx.shadowBlur = 0;
+        }
       }
     });
     if (!ascent) {
-      if (!meteor && Math.random() < 0.005) {
-        meteor = { x: 0.25 + Math.random() * 0.6, y: Math.random() * 0.25, vx: 0.5 + Math.random() * 0.4, vy: 0.28 + Math.random() * 0.25, life: 1 };
+      if (!meteor && Math.random() < 0.008) {
+        const colors = ['255,233,201', '207,228,255', '245,243,237'];
+        meteor = { x: 0.15 + Math.random() * 0.7, y: Math.random() * 0.2, vx: 0.9 + Math.random() * 0.5, vy: 0.42 + Math.random() * 0.3, life: 1, rgb: colors[Math.floor(Math.random() * colors.length)], trail: [] };
       }
       if (meteor) {
         meteor.x += meteor.vx / 60;
         meteor.y += meteor.vy / 60;
-        meteor.life -= 0.016;
+        meteor.life -= 0.012;
         const mx = meteor.x * width;
         const my = meteor.y * height;
-        const tail = 90 * meteor.life;
+        meteor.trail.push({ x: mx, y: my, life: 1 });
+        meteor.trail.forEach(spark => {
+          spark.life -= 0.03;
+          spark.y += 0.4;
+        });
+        meteor.trail = meteor.trail.filter(spark => spark.life > 0);
+        meteor.trail.forEach(spark => {
+          ctx.globalAlpha = spark.life * 0.7;
+          ctx.fillStyle = `rgba(${meteor.rgb},${spark.life})`;
+          ctx.fillRect(spark.x, spark.y, 1.4, 1.4);
+        });
+        const tail = 150 * meteor.life;
         const gradient = ctx.createLinearGradient(mx, my, mx - tail * meteor.vx, my - tail * meteor.vy);
-        gradient.addColorStop(0, 'rgba(245,243,237,.9)');
-        gradient.addColorStop(1, 'rgba(245,243,237,0)');
+        gradient.addColorStop(0, `rgba(${meteor.rgb},.95)`);
+        gradient.addColorStop(1, `rgba(${meteor.rgb},0)`);
         ctx.globalAlpha = Math.max(meteor.life, 0);
         ctx.strokeStyle = gradient;
-        ctx.lineWidth = 1.4;
+        ctx.lineWidth = 1.7;
         ctx.beginPath();
         ctx.moveTo(mx, my);
         ctx.lineTo(mx - tail * meteor.vx, my - tail * meteor.vy);
         ctx.stroke();
-        if (meteor.life <= 0 || mx < -120 || my > height + 120) meteor = null;
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = `rgba(${meteor.rgb},.9)`;
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath();
+        ctx.arc(mx, my, 1.9, 0, 7);
+        ctx.fill();
+        ctx.shadowBlur = 0;
+        if (meteor.life <= 0 || mx < -180 || my > height + 180) meteor = null;
       }
     }
     ctx.globalAlpha = 1;
@@ -348,17 +388,19 @@ function setupLaunch() {
     ascent = false;
     overlay.classList.add('orbit');
   };
+  const ignite = () => {
+    overlay.classList.add('flame-on', 'ignition');
+  };
   const liftoff = () => {
     tick('LIFTOFF');
-    overlay.classList.add('flame-on');
     overlay.classList.add('lift-off');
     ascent = true;
-    later(reachOrbit, 2300);
+    later(reachOrbit, 2500);
   };
   const open = () => {
     clearTimers();
     if (rocket) rocket.style.transition = 'none';
-    overlay.classList.remove('orbit', 'lift-off', 'flame-on');
+    overlay.classList.remove('orbit', 'lift-off', 'flame-on', 'ignition');
     if (rocket) void rocket.offsetWidth;
     if (rocket) rocket.style.transition = '';
     countdown.classList.remove('tick');
@@ -380,11 +422,12 @@ function setupLaunch() {
     later(() => tick('3'), 750);
     later(() => tick('2'), 1600);
     later(() => tick('1'), 2450);
-    later(liftoff, 3300);
+    later(ignite, 3300);
+    later(liftoff, 4400);
   };
   const close = () => {
     clearTimers();
-    overlay.classList.remove('open', 'orbit', 'lift-off', 'flame-on');
+    overlay.classList.remove('open', 'orbit', 'lift-off', 'flame-on', 'ignition');
     overlay.setAttribute('aria-hidden', 'true');
     countdown.classList.remove('tick');
     document.body.style.overflow = '';
