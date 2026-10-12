@@ -25,11 +25,15 @@ function renderProfile(profile) {
   const about = qs('#about-text');
   about.replaceChildren(...profile.about.map(paragraph => create('p', '', paragraph)));
   const links = qs('#contact-links');
+  if (profile.resume) {
+    const cv = externalLink(profile.resume, 'Download CV ↗');
+    cv.className = 'cv-link';
+    links.append(cv);
+  }
   if (profile.email) links.append(externalLink(`mailto:${profile.email}`, 'Email ↗'));
   if (profile.whatsapp) links.append(externalLink(`https://wa.me/${profile.whatsapp}`, 'WhatsApp ↗'));
   if (profile.github) links.append(externalLink(profile.github, 'GitHub ↗'));
   if (profile.linkedin) links.append(externalLink(profile.linkedin, 'LinkedIn ↗'));
-  if (profile.resume) links.append(externalLink(profile.resume, 'Résumé ↗'));
 }
 function renderExperience(items) {
   const root = qs('#experience-list');
@@ -68,6 +72,27 @@ function openProjectModal(project, modal) {
   if (project.repository) links.append(externalLink(project.repository, 'Source code ↗'));
   if (!links.childNodes.length) links.append(create('span', 'pill', 'Coming soon'));
   if (!modal.open) modal.showModal();
+}
+function setupCvModal() {
+  const modal = qs('#cv-modal');
+  if (!modal) return;
+  const links = document.querySelectorAll('.cv-link');
+  if (!links.length) return;
+  const frame = qs('#cv-frame');
+  let loaded = false;
+  const open = event => {
+    event.preventDefault();
+    if (!loaded) {
+      frame.src = `${links[0].getAttribute('href')}#toolbar=0&navpanes=0`;
+      loaded = true;
+    }
+    modal.showModal();
+  };
+  links.forEach(link => link.addEventListener('click', open));
+  qs('#cv-close').addEventListener('click', () => modal.close());
+  modal.addEventListener('click', event => {
+    if (event.target === modal) modal.close();
+  });
 }
 function setupProjectModal() {
   const modal = qs('#project-modal');
@@ -242,6 +267,7 @@ async function init() {
   setupTheme();
   setupNavbar();
   setupProjectModal();
+  setupCvModal();
   qs('#year').textContent = new Date().getFullYear();
   try {
     const response = await fetch('./data/content.json', { cache: 'no-store' });

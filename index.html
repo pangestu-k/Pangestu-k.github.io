@@ -42,7 +42,7 @@
             <p class="hero-kicker">Hello, I'm</p>
             <h1 id="hero-title">Muhammad<br>Rizky <em>Pangestu.</em></h1>
           </div>
-          <div class="hero-aside"><span class="aside-index">01 / Introduction</span><p class="hero-intro" id="hero-intro">Building dependable systems for real-world products.</p><a class="text-link" href="#work">Explore my work <span aria-hidden="true">↗</span></a></div>
+          <div class="hero-aside"><span class="aside-index">01 / Introduction</span><p class="hero-intro" id="hero-intro">Building dependable systems for real-world products.</p><div class="hero-actions"><a class="cta-button cv-link" href="assets/Muhammad_Rizky_Pangestu_CV.pdf">Download CV <span aria-hidden="true">↓</span></a><a class="text-link" href="#work">Explore my work <span aria-hidden="true">↗</span></a></div></div>
         </div>
         <div class="hero-bottom"><span>Backend development <span class="separator">·</span> API integration <span class="separator">·</span> Software engineering</span><span class="scroll-hint">Scroll to explore <span aria-hidden="true">↓</span></span></div>
       </section>
@@ -77,6 +77,18 @@
       <div class="modal-section" id="modal-features-wrap"><h4>Key features</h4><ul class="modal-features" id="modal-features"></ul></div>
       <div class="modal-section"><h4>Stack</h4><div class="pill-row" id="modal-stack"></div></div>
       <div class="project-links" id="modal-links"></div>
+    </div>
+  </dialog>
+  <dialog class="cv-modal" id="cv-modal" aria-labelledby="cv-modal-title">
+    <div class="cv-modal-inner">
+      <header class="modal-top">
+        <div><span class="project-kind">Curriculum Vitae</span><h3 id="cv-modal-title">Muhammad Rizky Pangestu</h3></div>
+        <div class="modal-top-actions">
+          <a class="cta-button" id="cv-download" href="assets/Muhammad_Rizky_Pangestu_CV.pdf" download="Muhammad_Rizky_Pangestu_CV.pdf">Download <span aria-hidden="true">↓</span></a>
+          <button class="modal-close" id="cv-close" type="button" aria-label="Close preview">×</button>
+        </div>
+      </header>
+      <iframe class="cv-frame" id="cv-frame" src="" title="CV preview" loading="lazy"></iframe>
     </div>
   </dialog>
   <noscript><p class="noscript">This portfolio needs JavaScript to display content from its JSON file.</p></noscript>

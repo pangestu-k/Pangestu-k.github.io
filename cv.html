@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Muhammad Rizky Pangestu — CV</title>
+  <style>
+    :root{--ink:#111418;--muted:#4a4f55;--soft:#6b7076;--line:#1f4e79;--accent:#1f4e79}
+    *{box-sizing:border-box}
+    body{margin:0;background:#eceef0;color:var(--ink);font:12.5px/1.55 Arial,Helvetica,sans-serif;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .sheet{max-width:820px;margin:24px auto;background:#fff;padding:46px 54px;box-shadow:0 2px 18px rgba(0,0,0,.08)}
+    header{text-align:center;margin-bottom:18px}
+    h1{font-size:24px;letter-spacing:.06em;margin:0 0 6px;text-transform:uppercase}
+    .role{font-size:13.5px;color:var(--accent);font-weight:700;margin-bottom:8px}
+    .contact{font-size:10.8px;color:var(--muted)}
+    .contact a{color:inherit;text-decoration:none}
+    .contact span+span::before{content:" · ";color:#9aa0a6}
+    h2{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);border-bottom:2px solid var(--accent);padding-bottom:3px;margin:22px 0 10px}
+    p{margin:0 0 8px}
+    .summary{font-size:12.5px}
+    .skill{margin:0 0 5px}
+    .skill b{font-weight:700}
+    .job{margin:0 0 14px}
+    .job-head{display:flex;justify-content:space-between;align-items:baseline;gap:14px}
+    .job-title{font-size:12.8px}
+    .job-title b{font-weight:700}
+    .job-title i{color:var(--muted);font-size:12px}
+    .job-title .sep{color:#9aa0a6;margin:0 4px}
+    .date{font-size:11px;color:var(--soft);white-space:nowrap}
+    .loc{font-size:10.5px;color:var(--soft)}
+    ul{margin:6px 0 0;padding-left:17px}
+    li{margin-bottom:3px}
+    .stack{font-size:10.8px;color:var(--soft);font-style:italic;margin-top:5px}
+    .proj{margin-bottom:12px}
+    .proj-head{font-size:12.6px}
+    .proj-head b{font-weight:700}
+    .proj-head a{color:var(--accent);text-decoration:none}
+    .proj-head .sep{color:#9aa0a6;margin:0 4px}
+    .proj p{margin:3px 0 0}
+    .edu{display:flex;justify-content:space-between;align-items:baseline;gap:14px;margin-bottom:9px}
+    .edu b{font-weight:700;font-size:12.6px}
+    .edu i{color:var(--muted);font-size:11.5px;margin-left:6px}
+    .edu p{margin:2px 0 0;font-size:11.8px;color:var(--muted)}
+    .toolbar{position:fixed;top:16px;right:16px;display:flex;gap:8px}
+    .toolbar a,.toolbar button{background:#1f4e79;color:#fff;border:none;border-radius:4px;padding:9px 16px;font:600 12.5px Arial,sans-serif;text-decoration:none;cursor:pointer}
+    .toolbar button:hover{background:#16405f}
+    @page{size:A4;margin:13mm}
+    @media print{
+      body{background:#fff}
+      .sheet{max-width:none;margin:0;padding:0;box-shadow:none}
+      .toolbar{display:none}
+      h2{margin-top:16px}
+      .job,.proj{break-inside:avoid}
+    }
+    @media(max-width:640px){.sheet{margin:0;padding:26px 20px}.job-head,.edu{flex-direction:column;gap:1px}.date{white-space:normal}.toolbar{top:8px;right:8px}}
+  </style>
+</head>
+<body>
+  <div class="toolbar"><button type="button" onclick="window.print()">Print / Save PDF</button><a href="index.html">Back to portfolio</a></div>
+  <main class="sheet">
+    <header>
+      <h1>Muhammad Rizky Pangestu</h1>
+      <div class="role">Backend Developer · Software Engineer</div>
+      <div class="contact">
+        <span>risky.mpangestu@gmail.com</span>
+        <span>+62 813-1500-6236</span>
+        <span>Sukabumi, West Java, Indonesia</span>
+        <span><a href="https://pangestu-k.github.io">pangestu-k.github.io</a></span>
+        <span><a href="https://github.com/pangestu-k">github.com/pangestu-k</a></span>
+        <span><a href="https://www.linkedin.com/in/muhammad-rizky-pangestu-691a28276/">linkedin.com/in/muhammad-rizky-pangestu</a></span>
+      </div>
+    </header>
+
+    <h2>Summary</h2>
+    <p class="summary">Backend-focused Software Engineer with 5+ years of professional experience building REST APIs, payment gateway integrations, background jobs, and internal platforms for products across education, fintech, and content industries. Working knowledge across the stack: Golang (Echo, Gin, Fiber), Laravel, and Node.js on the backend; React.js and Next.js on the frontend; PostgreSQL, MySQL, MongoDB, and SQL Server as databases. Recently focused on AI/LLM engineering — LLM agents, tool calling, text-to-SQL, LLM API development, and structured data extraction. Comfortable owning services end to end, from API design and integration to deployment on VPS with Nginx, Docker, and Dokploy.</p>
+
+    <h2>Technical Skills</h2>
+    <p class="skill"><b>Languages:</b> Golang, TypeScript, JavaScript, SQL, PHP</p>
+    <p class="skill"><b>AI / LLM:</b> LLM Agent, Tool Calling, Text-to-SQL, LLM API Development, Structured Data Extraction, AI-Assisted Development</p>
+    <p class="skill"><b>Backend:</b> Node.js, Express.js, Fiber, Gin, Hono, Echo, OpenAPI / Swagger, REST API, Laravel, Livewire</p>
+    <p class="skill"><b>Databases:</b> PostgreSQL, MongoDB, MySQL, SQL Server, Supabase</p>
+    <p class="skill"><b>Frontend:</b> React.js, Svelte, Next.js, Vite, TanStack, Tailwind CSS, Ant Design, shadcn/ui, Chakra UI</p>
+    <p class="skill"><b>Cloud &amp; DevOps:</b> VPS Administration, Nginx, systemd, Dokploy, Docker, Self-hosted Deployment, Umami Analytics</p>
+
+    <h2>Work Experience</h2>
+    <div class="job">
+      <div class="job-head">
+        <div class="job-title"><b>Zegen Solusi Mandiri</b><span class="sep">·</span><i>Full Stack Developer</i></div>
+        <div class="date">Jan 2023 – Present</div>
+      </div>
+      <div class="loc">Tangerang, Indonesia</div>
+      <ul>
+        <li>Develop software applications across frontend and backend for client projects, owning features from API design and integration through deployment.</li>
+        <li>Work with Golang and Laravel services, React.js and Next.js frontends, and PostgreSQL databases across multiple client engagements.</li>
+      </ul>
+      <div class="stack">Stack: Golang, Echo, Laravel, React.js, Next.js, PostgreSQL</div>
+    </div>
+    <div class="job">
+      <div class="job-head">
+        <div class="job-title"><b>PT Global 7 Teknologi</b><span class="sep">·</span><i>Backend Developer</i></div>
+        <div class="date">May 2022 – Dec 2022</div>
+      </div>
+      <div class="loc">Depok, Indonesia</div>
+      <ul>
+        <li>Developed backend services for AYOSCAN, including transaction-related services and third-party integrations.</li>
+        <li>Built REST APIs, background queues, and scheduled jobs supporting daily product operations.</li>
+        <li>Integrated Xendit payment gateway and Zipay e-money, covering transaction callbacks and transaction data mapping.</li>
+      </ul>
+      <div class="stack">Stack: Laravel, Node.js, PostgreSQL, MySQL, Xendit</div>
+    </div>
+    <div class="job">
+      <div class="job-head">
+        <div class="job-title"><b>PT Satu Visi Potensia</b><span class="sep">·</span><i>Backend Developer</i></div>
+        <div class="date">Jun 2021 – May 2022</div>
+      </div>
+      <div class="loc">Jakarta, Indonesia</div>
+      <ul>
+        <li>Built REST APIs for Reach ASA and contributed to ASA Platform v2 and ASA Panel v3.</li>
+        <li>Supported backend development for Coaching Tracker, an educational coaching product.</li>
+      </ul>
+      <div class="stack">Stack: Laravel, Node.js, PostgreSQL, MySQL</div>
+    </div>
+    <div class="job">
+      <div class="job-head">
+        <div class="job-title"><b>CV IDS Consultant</b><span class="sep">·</span><i>Backend Developer</i></div>
+        <div class="date">Sep 2020 – Dec 2020</div>
+      </div>
+      <div class="loc">Bogor, Indonesia</div>
+      <ul>
+        <li>Worked on backend development in an education technology environment supporting online learning.</li>
+      </ul>
+      <div class="stack">Stack: PHP, Laravel, Node.js, MySQL, PostgreSQL</div>
+    </div>
+
+    <h2>Projects</h2>
+    <div class="proj">
+      <div class="proj-head"><b>Vtuberspace</b><span class="sep">·</span><a href="https://vtuberspace.id">vtuberspace.id</a><span class="sep">·</span>News Portal &amp; Database</div>
+      <p>Community-run news portal covering the Indonesian VTuber scene, doubling as a crowd-sourced database of VTubers across Indonesia. Content is managed through Google Sheets synchronization, and the backend is built with clean architecture.</p>
+      <div class="stack">Stack: Golang, Echo, GORM, PostgreSQL, React.js, Next.js, Google Sheets Sync, Clean Architecture</div>
+    </div>
+    <div class="proj">
+      <div class="proj-head"><b>Edura LMS</b><span class="sep">·</span><a href="https://app.edunara.id">app.edunara.id</a><span class="sep">·</span>Learning Management System</div>
+      <p>Learning management system for schools, running academic activities end to end — from student registration and enrollment to grading and report card generation — with online payment support and containerized deployment.</p>
+      <div class="stack">Stack: Golang, Echo, GORM, PostgreSQL, React.js, Vite, TanStack, Docker, Dokploy, Payment Gateway</div>
+    </div>
+    <div class="proj">
+      <div class="proj-head"><b>Bale Lelang</b><span class="sep">·</span><a href="https://balelelang.btn.co.id">balelelang.btn.co.id</a><span class="sep">·</span>Auction Platform</div>
+      <p>Auction application for Bank BTN's asset auctions. Bidders browse assets, favorite the ones they like, mark their interest, and follow the flow through to purchase, powered by an event-driven microservice architecture.</p>
+      <div class="stack">Stack: Golang, Echo, GORM, PostgreSQL, Microservices, NATS, Debezium, React.js, Next.js, Ant Design</div>
+    </div>
+    <div class="proj">
+      <div class="proj-head"><b>Pesanin</b><span class="sep">·</span>In Development<span class="sep">·</span>QR Restaurant Ordering</div>
+      <p>QR-code ordering application for restaurants. Guests order directly from their table while staff manage stock, tables, and floor availability in real time, from spotting empty tables to tracking incoming orders and payments.</p>
+      <div class="stack">Stack: Laravel, React.js, PostgreSQL, WebSockets, Payment Gateway</div>
+    </div>
+
+    <h2>Education</h2>
+    <div class="edu">
+      <div><b>STTI NIIT (I-Tech)</b><i>Bachelor's — Informatics Engineering</i><p>Graduated 2026</p></div>
+      <div class="date">2025 – 2026</div>
+    </div>
+    <div class="edu">
+      <div><b>STIE Dharma Negara</b><i>Bachelor's — Informatics Engineering</i></div>
+      <div class="date">2021 – 2025</div>
+    </div>
+    <div class="edu">
+      <div><b>SMK Wikrama 1 Garut</b><i>Vocational High School — Software Engineering</i></div>
+      <div class="date">2018 – 2021</div>
+    </div>
+  </main>
+</body>
+</html>
