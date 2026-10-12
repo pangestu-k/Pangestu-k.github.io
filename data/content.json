@@ -1,0 +1,71 @@
+{
+  "profile": {
+    "name": "Muhammad Rizky Pangestu",
+    "shortName": "Rizky Pangestu",
+    "role": "Backend Developer & Software Engineer",
+    "location": "Sukabumi, West Java, Indonesia",
+    "availability": "Open to meaningful collaborations",
+    "intro": "I build dependable backend systems, from API design and integrations to the services that keep products running.",
+    "about": [
+      "I'm a software engineer with a backend focus and professional experience across product development and system integrations. My work has included REST APIs, payment gateways, scheduled jobs, and internal platforms.",
+      "I enjoy the less visible side of software: making services predictable, maintaining clear boundaries, and helping teams ship features that are reliable beyond the first release."
+    ],
+    "email": "",
+    "github": "",
+    "linkedin": "https://www.linkedin.com/in/muhammad-rizky-pangestu-691a28276/",
+    "resume": "",
+    "photo": ""
+  },
+  "experience": [
+    {
+      "company": "Zegen Solusi Mandiri",
+      "role": "Full Stack Developer",
+      "period": "Jan 2023 — Present",
+      "location": "Tangerang, Indonesia",
+      "description": "Software application development across frontend and backend. Specific client work is omitted until approved for public sharing.",
+      "highlights": [],
+      "stack": []
+    },
+    {
+      "company": "PT Global 7 Teknologi",
+      "role": "Backend Developer",
+      "period": "May 2022 — Dec 2022",
+      "location": "Depok, Indonesia",
+      "description": "Backend development for AYOSCAN, including transaction-related services and third-party integrations.",
+      "highlights": ["Developed REST APIs, background queues, and scheduled jobs", "Worked on Xendit payment gateway and Zipay e-money integrations", "Implemented transaction callbacks and transaction data mapping"],
+      "stack": ["REST API", "Payment integrations", "Queues", "Cron jobs"]
+    },
+    {
+      "company": "PT Satu Visi Potensia",
+      "role": "Backend Developer",
+      "period": "Jun 2021 — May 2022",
+      "location": "Jakarta, Indonesia",
+      "description": "Contributed backend services for educational and coaching-related products.",
+      "highlights": ["Built REST APIs for Reach ASA", "Worked on ASA Platform v2 and ASA Panel v3", "Supported backend development for Coaching Tracker"],
+      "stack": ["REST API", "Backend development"]
+    },
+    {
+      "company": "CV IDS Consultant",
+      "role": "Backend Developer",
+      "period": "Sep 2020 — Dec 2020",
+      "location": "Bogor, Indonesia",
+      "description": "Backend development in an education technology environment supporting online learning.",
+      "highlights": [],
+      "stack": []
+    }
+  ],
+  "skills": [
+    {"label": "Languages", "items": ["Go", "PHP", "JavaScript"]},
+    {"label": "Backend", "items": ["Gin", "Echo", "GORM", "Laravel", "Express.js", "Node.js", "REST APIs"]},
+    {"label": "Frontend", "items": ["React", "Livewire", "Tailwind CSS", "Bootstrap", "Chakra UI"]},
+    {"label": "Ways of working", "items": ["Git", "Team collaboration", "API integration", "Payment gateway integration"]}
+  ],
+  "projects": [],
+  "education": [
+    {"school": "STTI NIIT (I-Tech)", "program": "Software Engineering", "period": "2021 — 2026"},
+    {"school": "SMK Wikrama 1 Garut", "program": "Vocational education", "period": "2018 — 2021"}
+  ],
+  "recognition": [
+    {"title": "1st Place — City-level Software Application Competition (LKS)", "year": "2019"}
+  ]
+}

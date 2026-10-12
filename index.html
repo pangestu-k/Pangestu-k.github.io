@@ -1,200 +1,63 @@
-<!DOCTYPE html>
-<!-- Designined by CodingLab | www.youtube.com/codinglabyt -->
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="UTF-8">
-    <title> My Portfolio | Pangestu-k </title>
-    <link rel="shortcut icon" href="Images/astounot.png" type="image/x-icon">
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="fontawesome-free-5.15.3-web/css/all.min.css"/>
-
-     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   </head>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f5f3ed">
+  <meta name="description" content="Portfolio of Muhammad Rizky Pangestu, backend developer and software engineer.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Muhammad Rizky Pangestu — Software Engineer">
+  <meta property="og:description" content="Backend engineering, experience, selected work, and technical skills.">
+  <title>Muhammad Rizky Pangestu — Software Engineer</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <script src="main.js" defer></script>
+</head>
 <body>
-  <!-- Move to up button -->
-  <div class="scroll-button">
-    <a href="#home"><i class="fas fa-arrow-up"></i></a>
-  </div>
-  <!-- navgaition menu -->
-  <nav>
-    <div class="navbar">
-      <div class="logo"><a href="#">Pangestu-k.</a></div>
-      <ul class="menu">
-          <li><a href="#home">Home</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#skills">Skills</a></li>
-          <li><a href="#services">Services</a></li>
-          <li><a href="#contact">Contact</a></li>
-          <div class="cancel-btn">
-            <i class="fas fa-times"></i>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="site-shell">
+    <header class="topbar" id="top">
+      <a href="#top" class="wordmark" aria-label="Back to top">mrp<span class="wordmark-dot">.</span></a>
+      <nav class="navigation" aria-label="Main navigation">
+        <a href="#about">About</a>
+        <a href="#experience">Experience</a>
+        <a href="#work">Work</a>
+        <a href="#skills">Skills</a>
+      </nav>
+      <a class="nav-contact" href="#contact">Let's talk <span aria-hidden="true">↗</span></a>
+    </header>
+    <main id="main">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-eyebrow"><span class="signal" aria-hidden="true"></span><span id="profile-location">Indonesia</span><span class="eyebrow-divider">/</span> Software engineer</div>
+        <div class="hero-grid">
+          <div>
+            <p class="hero-kicker">Hello, I'm</p>
+            <h1 id="hero-title">Muhammad<br>Rizky <em>Pangestu.</em></h1>
           </div>
-      </ul>
-      <div class="media-icons">
-        <a href="https://www.facebook.com/rizky.pangestu.92372"><i class="fab fa-facebook-f"></i></a>
-        <a href="https://www.linkedin.com/in/muhammad-rizky-pangestu-611421192/"><i class="fab fa-linkedin"></i></a>
-        <a href="https://www.instagram.com/rizky.pangestu17/"><i class="fab fa-instagram"></i></a>
-      </div>
-    </div>
-    <div class="menu-btn">
-      <i class="fas fa-bars"></i>
-    </div>
-  </nav>
-
-<!-- Home Section Start -->
- <section class="home" id="home">
-   <div class="home-content">
-     <div class="text">
-       <div class="text-one">Hello,</div>
-       <div class="text-two">I'm Muhammad Rizky</div>
-       <div class="text-three">Backend Developer</div>
-       <div class="text-four">From Indonesia  </div>
-     </div>
-     <div class="button">
-       <a href="#contact">
-         <button>Hire Me</button>
-        </a>
-     </div>
-   </div>
- </section>
-
-<!-- About Section Start -->
-<section class="about" id="about">
-  <div class="content">
-    <div class="title"><span>About Me</span></div>
-  <div class="about-details">
-    <div class="left">
-      <img src="Images/gambar.jpg" alt="">
-    </div>
-    <div class="right">
-      <div class="topic">Coding Is My Passion</div>
-        <p>Graduates from the Department of Software
-          Engineering, who has 3 years of experience in
-          creating a website, I have worked on various projects, both with HTML, CSS, Javascript and also the Laravel Framework. Have a high enthusiasm for learning and working in a team.
-        </p>
-      <div class="button">
-        <a href="https://github.com/Pangestu-k?tab=repositories" target="_blank">
-          <button><i class="fab fa-github"></i> GitHub</button>
-        </a>
-      </div>
-    </div>
+          <div class="hero-aside"><span class="aside-index">01 / Introduction</span><p class="hero-intro" id="hero-intro">Building dependable systems for real-world products.</p><a class="text-link" href="#work">Explore my work <span aria-hidden="true">↗</span></a></div>
+        </div>
+        <div class="hero-bottom"><span>Backend development <span class="separator">·</span> API integration <span class="separator">·</span> Software engineering</span><span class="scroll-hint">Scroll to explore <span aria-hidden="true">↓</span></span></div>
+      </section>
+      <section class="section about-section" id="about" aria-labelledby="about-heading">
+        <div class="section-heading"><span class="section-number">01 / About</span><h2 id="about-heading">A little<br><em>about me.</em></h2></div>
+        <div class="section-content"><div id="about-text" class="prose"><p>I build backend systems and software integrations.</p></div><div class="about-bottom"><span class="micro-label">The short version</span><p>Curious by nature. Practical by design.</p></div></div>
+      </section>
+      <section class="section experience-section" id="experience" aria-labelledby="experience-heading">
+        <div class="section-heading"><span class="section-number">02 / Experience</span><h2 id="experience-heading">Where I've<br><em>worked.</em></h2></div>
+        <div class="section-content"><div id="experience-list" class="experience-list" aria-live="polite"></div></div>
+      </section>
+      <section class="section work-section" id="work" aria-labelledby="work-heading">
+        <div class="section-heading"><span class="section-number">03 / Selected work</span><h2 id="work-heading">Things I've<br><em>built.</em></h2></div>
+        <div class="section-content"><p class="section-lead">A selection of projects, experiments, and systems I can share publicly.</p><div id="projects-list" class="projects-list"></div></div>
+      </section>
+      <section class="section skills-section" id="skills" aria-labelledby="skills-heading">
+        <div class="section-heading"><span class="section-number">04 / Toolkit</span><h2 id="skills-heading">What I<br><em>work with.</em></h2></div>
+        <div class="section-content"><div class="skills-list" id="skills-list"></div><div class="additional-block"><h3>Education & recognition</h3><div id="education-list"></div><div id="recognition-list"></div></div></div>
+      </section>
+      <section class="contact-section" id="contact" aria-labelledby="contact-heading"><span class="section-number">05 / Contact</span><div class="contact-layout"><h2 id="contact-heading">Have something<br><em>in mind?</em></h2><div class="contact-side"><p>I'm always interested in thoughtful conversations about software, engineering, and building useful things.</p><div id="contact-links" class="contact-links"></div></div></div></section>
+    </main>
+    <footer class="footer"><a href="#top" class="footer-brand">mrp<span>.</span></a><span>© <span id="year"></span> Muhammad Rizky Pangestu</span><a href="#top">Back to top ↑</a></footer>
   </div>
-  </div>
-</section>
-
-<!-- My Skill Section Start -->
-<!-- Section Tag and Other Div will same where we need to put same CSS -->
-<section class="skills" id="skills">
- <div class="content">
-   <div class="title"><span>My Skills</span></div>
-   <div class="skills-details">
-     <div class="text">
-       <div class="topic">Skills Reflects Our Knowledge</div>
-       <p>I am a person who continues to learn, never bored in seeking new knowledge, various kinds of new technologies are always the target of my curiosity. I have won various competitions including being the <b>Top 15 LKS Software Application</b> at West
-        Java level (2019), 1st Winner of LKS Software Application at
-        City level (2019), 2nd Winner of Biology Competition at City
-        levels (2017). In addition, I also master several soft skills such as public speaking, leadership and presentation pitch.</p>
-       <div class="experience">
-         <div class="num">3</div>
-         <div class="exp">Years Of <br> Experience</div>
-       </div>
-     </div>
-     <div class="boxes">
-      <div class="box">
-        <div class="topic">HTML</div>
-        <div class="per">(Advance)</div>
-      </div>
-      <div class="box">
-        <div class="topic">CSS</div>
-        <div class="per">(Advance)</div>
-      </div>
-      <div class="box">
-        <div class="topic js">JavaScript</div>
-        <div class="mini">JS</div>
-        <div class="per">(Intermediete)</div>
-      </div>
-      <div class="box">
-        <div class="topic">Laravel</div>
-        <div class="per">(Intermediete)</div>
-      </div>
-    </div>
-   </div>
- </div>
-</section>
-
-<!-- My Services Section Start -->
- <section class="services" id="services">
-   <div class="content">
-     <div class="title"><span>My Project</span></div>
-     <div class="boxes">
-       <div class="box">
-         <div class="icon">
-           <i class="fas fa-desktop"></i>
-       </div>
-       <div class="topic">Perpusku Library</div>
-       <p>Technology : Laravel + Jquery + Bootstrap</p>
-     </div>
-       <div class="box">
-         <div class="icon">
-          <i class="fas fa-money-bill"></i>
-       </div>
-       <div class="topic">Spp Payment</div>
-       <p>Technology : Laravel + Jquery +  Ajax + Bootstrap</p>
-     </div>
-       <div class="box">
-         <div class="icon">
-           <i class="fas fa-chart-line"></i>
-       </div>
-       <div class="topic">Point of Sales</div>
-       <p>Technology : Laravel + Javascript + Bootstrap</p>
-     </div>
-       <div class="box">
-         <div class="icon">
-          <i class="fa fa-graduation-cap" aria-hidden="true"></i>
-       </div>
-       <div class="topic">Asa Platform</div>
-       <p>Technology : Laravel + Livewire + Tailwind</p>
-     </div>
-       <div class="box">
-         <div class="icon">
-           <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-       </div>
-       <div class="topic">Rishop</div>
-       <p>Technology : PHP + Jquery + Ajax + CSS </p>
-     </div>
-       <div class="box">
-         <div class="icon">
-           <i class="fas fa-hospital    "></i>
-       </div>
-       <div class="topic">Covid Risk Test</div>
-       <p>Technology : PHP + Javascript + CSS </p>
-     </div>
-   </div>
-   </div>
- </section>
-
-<!-- Contact Me section Start -->
-<section class="contact" id="7">
-  <div class="content" id="contact">
-    <div class="title"><span>Contact Me</span></div>
-    <div class="text">
-      <div class="topic">Want more information ?</div>
-      <p>If you want to know more information about me, please contact me on email.</p>
-      <center>
-        <a href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=Risky.mpangestu@gmail.com" target="_blank" title="My Email">Risky.mpangestu@gmail.com</a>
-      </center>
-    </div>
-  </div>
-</section>
-
-<!-- Footer Section Start -->
-<footer>
-  <div class="text">
-    <span>Created By <a href="#">Pangestu-k</a> | &#169; 2021 All Rights Reserved</span>
-  </div>
-</footer>
-
-  <script src="script.js"></script>
+  <noscript><p class="noscript">This portfolio needs JavaScript to display content from its JSON file.</p></noscript>
 </body>
 </html>
