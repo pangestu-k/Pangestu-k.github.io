@@ -118,12 +118,51 @@ function setupTheme() {
     toggle.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
   };
   toggle.addEventListener('click', () => {
-    apply(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!document.startViewTransition || reduced) {
+      apply(next);
+      return;
+    }
+    const rect = toggle.getBoundingClientRect();
+    const x = rect.left + rect.width / 2;
+    const y = rect.top + rect.height / 2;
+    const maxRadius = Math.hypot(Math.max(x, window.innerWidth - x), Math.max(y, window.innerHeight - y));
+    const transition = document.startViewTransition(() => apply(next));
+    transition.ready.then(() => {
+      document.documentElement.animate(
+        { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${maxRadius}px at ${x}px ${y}px)`] },
+        { duration: 650, easing: 'cubic-bezier(.22,1,.36,1)', pseudoElement: '::view-transition-new(root)' }
+      );
+    }).catch(() => {});
   });
   apply(root.getAttribute('data-theme') || 'light');
 }
+function setupNavbar() {
+  const header = qs('.topbar');
+  if (!header) return;
+  let lastY = window.scrollY;
+  let ticking = false;
+  const update = () => {
+    const y = window.scrollY;
+    const delta = y - lastY;
+    if (y > 140 && delta > 2) header.classList.add('nav-hidden');
+    else if (y <= 140 || delta < -2) header.classList.remove('nav-hidden');
+    header.classList.toggle('nav-scrolled', y > 10);
+    lastY = y;
+    ticking = false;
+  };
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      ticking = true;
+      requestAnimationFrame(update);
+    }
+  }, { passive: true });
+  update();
+}
 async function init() {
   setupTheme();
+  setupNavbar();
   qs('#year').textContent = new Date().getFullYear();
   try {
     const response = await fetch('./data/content.json', { cache: 'no-store' });
