@@ -262,8 +262,47 @@ function setupReveal() {
     Array.from(container.querySelectorAll(itemSelector)).forEach((el, i) => watch(el, i));
   });
 }
+function setupCursor() {
+  if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const root = document.documentElement;
+  const dot = create('div', 'cursor-dot');
+  const ring = create('div', 'cursor-ring');
+  document.body.append(ring, dot);
+  root.classList.add('custom-cursor');
+  let x = window.innerWidth / 2;
+  let y = window.innerHeight / 2;
+  let ringX = x;
+  let ringY = y;
+  const onMove = event => {
+    x = event.clientX;
+    y = event.clientY;
+    dot.style.transform = `translate(${x}px,${y}px) translate(-50%,-50%)`;
+    root.classList.add('cursor-active');
+    const interactive = event.target instanceof Element && event.target.closest('a, button, [role="button"], .project-card');
+    ring.classList.toggle('is-hover', Boolean(interactive));
+    dot.classList.toggle('is-hover', Boolean(interactive));
+  };
+  window.addEventListener('mousemove', onMove, { passive: true });
+  document.addEventListener('mouseleave', () => root.classList.remove('cursor-active'));
+  window.addEventListener('mousedown', () => ring.classList.add('is-down'));
+  window.addEventListener('mouseup', () => ring.classList.remove('is-down'));
+  document.addEventListener('mouseover', event => {
+    const overIframe = event.target instanceof Element && event.target.tagName === 'IFRAME';
+    ring.classList.toggle('cursor-hidden', overIframe);
+    dot.classList.toggle('cursor-hidden', overIframe);
+  });
+  const loop = () => {
+    ringX += (x - ringX) * 0.16;
+    ringY += (y - ringY) * 0.16;
+    ring.style.transform = `translate(${ringX}px,${ringY}px) translate(-50%,-50%)`;
+    requestAnimationFrame(loop);
+  };
+  requestAnimationFrame(loop);
+}
 async function init() {
   enableMotion();
+  setupCursor();
   setupTheme();
   setupNavbar();
   setupProjectModal();
