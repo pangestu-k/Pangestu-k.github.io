@@ -63,7 +63,13 @@
         <div class="section-content"><div class="skills-list" id="skills-list"></div></div>
         <div class="additional-block" id="education"><div class="additional-heading"><span class="section-number">04 / Education</span><h3>Education &amp;<br><em>recognition.</em></h3></div><div class="additional-content"><div id="education-list"></div><div id="recognition-list"></div></div></div>
       </section>
-      <section class="contact-section" id="contact" aria-labelledby="contact-heading"><span class="section-number">05 / Contact</span><div class="contact-layout"><h2 id="contact-heading">Have something<br><em>in mind?</em></h2><div class="contact-side"><p>I'm always interested in thoughtful conversations about software, engineering, and building useful things.</p><div id="contact-links" class="contact-links"></div></div></div></section>
+      <section class="contact-section" id="contact" aria-labelledby="contact-heading"><span class="section-number">05 / Contact</span><div class="contact-layout"><h2 id="contact-heading">Have something<br><em>in mind?</em></h2><div class="contact-side"><p>I'm always interested in thoughtful conversations about software, engineering, and building useful things.</p><div id="contact-links" class="contact-links"></div></div></div>
+        <div class="launchpad" id="launchpad">
+          <div class="pad-info"><span class="pad-label">05 / Launch complex</span><p class="pad-text">Uplink established.<br>Ready for liftoff to orbit.</p></div>
+          <div class="pad-scene" aria-hidden="true"><div class="pad-tower"></div><div class="pad-rocket"></div><div class="pad-shadow"></div><span class="pad-smoke s1"></span><span class="pad-smoke s2"></span><div class="pad-ground"></div></div>
+          <button class="launch-btn" id="launch-btn" type="button">Initiate launch <span aria-hidden="true">→</span></button>
+        </div>
+      </section>
     </main>
     <footer class="footer"><a href="#top" class="footer-brand">Pangestu-k<span>.</span></a><span>© <span id="year"></span> Muhammad Rizky Pangestu</span><a href="#top">Back to top ↑</a></footer>
   </div>
@@ -91,6 +97,47 @@
       <iframe class="cv-frame" id="cv-frame" src="" title="CV preview" loading="lazy"></iframe>
     </div>
   </dialog>
+  <div class="launch-overlay" id="launch-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Launch sequence">
+    <div class="launch-stage" id="launch-stage">
+      <div class="mission-ground"></div>
+      <div class="mission-rocket" id="mission-rocket">
+        <svg class="rocket-svg" viewBox="0 0 120 300" aria-hidden="true">
+          <defs>
+            <linearGradient id="rgBody" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#a8ac9f"/><stop offset=".45" stop-color="#f2f0e6"/><stop offset="1" stop-color="#7e8278"/></linearGradient>
+            <linearGradient id="rgNose" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#7c3a24"/><stop offset=".5" stop-color="#c99079"/><stop offset="1" stop-color="#8f452c"/></linearGradient>
+            <linearGradient id="rgFin" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a14b31"/><stop offset="1" stop-color="#7c3a24"/></linearGradient>
+            <radialGradient id="rgGlass" cx=".35" cy=".3" r="1"><stop offset="0" stop-color="#9fd8e8"/><stop offset=".55" stop-color="#274b5e"/><stop offset="1" stop-color="#12222c"/></radialGradient>
+            <linearGradient id="rgFlame" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd27a"/><stop offset=".55" stop-color="#ff8f3d"/><stop offset="1" stop-color="#e2571e"/></linearGradient>
+          </defs>
+          <path d="M34 148 L8 210 Q7 214 12 213 L34 196 Z" fill="url(#rgFin)"/>
+          <path d="M86 148 L112 210 Q113 214 108 213 L86 196 Z" fill="url(#rgFin)"/>
+          <path d="M60 6 C44 30 34 56 34 86 L34 186 Q34 198 46 198 L74 198 Q86 198 86 186 L86 86 C86 56 76 30 60 6 Z" fill="url(#rgBody)"/>
+          <path d="M60 6 C48 24 40 42 36 64 L84 64 C80 42 72 24 60 6 Z" fill="url(#rgNose)"/>
+          <rect x="34" y="152" width="52" height="10" fill="#a14b31"/>
+          <circle cx="60" cy="112" r="17" fill="#d8d5c9"/>
+          <circle cx="60" cy="112" r="13" fill="url(#rgGlass)"/>
+          <circle cx="55" cy="107" r="3.5" fill="#eaf6fa" opacity=".85"/>
+          <circle class="beacon" cx="60" cy="11" r="3" fill="#ff6b4a"/>
+          <path d="M47 198 L42 218 L78 218 L73 198 Z" fill="#3a3d38"/>
+          <rect x="42" y="216" width="36" height="4" rx="2" fill="#242622"/>
+          <g class="rocket-flame">
+            <path d="M60 222 C46 244 44 262 60 292 C76 262 74 244 60 222 Z" fill="url(#rgFlame)" opacity=".95"/>
+            <path d="M60 222 C52 238 51 250 60 268 C69 250 68 238 60 222 Z" fill="#ffe9b0"/>
+          </g>
+        </svg>
+      </div>
+      <span class="burst b1"></span><span class="burst b2"></span><span class="burst b3"></span>
+    </div>
+    <canvas id="starfield"></canvas>
+    <div class="countdown" id="countdown"></div>
+    <div class="orbit-panel">
+      <span class="section-number">Orbit established</span>
+      <h2>Reach me<br><em>in orbit.</em></h2>
+      <p class="orbit-caption">Transmission channel open — Sukabumi ground station</p>
+      <div class="orbit-links" id="orbit-links"></div>
+    </div>
+    <button class="orbit-exit" id="orbit-exit" type="button">Exit orbit <span aria-hidden="true">✕</span></button>
+  </div>
   <noscript><p class="noscript">This portfolio needs JavaScript to display content from its JSON file.</p></noscript>
 </body>
 </html>

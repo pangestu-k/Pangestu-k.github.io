@@ -10,6 +10,7 @@ const create = (tag, className, text) => {
   return node;
 };
 const append = (parent, ...nodes) => nodes.forEach(node => parent.append(node));
+let openCvPreview = null;
 const externalLink = (url, label) => {
   const anchor = create('a', '', label);
   anchor.href = url;
@@ -28,12 +29,22 @@ function renderProfile(profile) {
   if (profile.resume) {
     const cv = externalLink(profile.resume, 'Download CV ↗');
     cv.className = 'cv-link';
+    if (openCvPreview) cv.addEventListener('click', event => { event.preventDefault(); openCvPreview(); });
     links.append(cv);
   }
   if (profile.email) links.append(externalLink(`mailto:${profile.email}`, 'Email ↗'));
   if (profile.whatsapp) links.append(externalLink(`https://wa.me/${profile.whatsapp}`, 'WhatsApp ↗'));
   if (profile.github) links.append(externalLink(profile.github, 'GitHub ↗'));
   if (profile.linkedin) links.append(externalLink(profile.linkedin, 'LinkedIn ↗'));
+  const orbit = qs('#orbit-links');
+  if (orbit) {
+    orbit.replaceChildren(...Array.from(links.children).map(child => {
+      const clone = child.cloneNode(true);
+      clone.setAttribute('target', '_blank');
+      clone.setAttribute('rel', 'noopener noreferrer');
+      return clone;
+    }));
+  }
 }
 function renderExperience(items) {
   const root = qs('#experience-list');
@@ -80,15 +91,18 @@ function setupCvModal() {
   if (!links.length) return;
   const frame = qs('#cv-frame');
   let loaded = false;
-  const open = event => {
-    event.preventDefault();
+  const openCv = () => {
     if (!loaded) {
       frame.src = `${links[0].getAttribute('href')}#toolbar=0&navpanes=0`;
       loaded = true;
     }
     modal.showModal();
   };
-  links.forEach(link => link.addEventListener('click', open));
+  links.forEach(link => link.addEventListener('click', event => {
+    event.preventDefault();
+    openCv();
+  }));
+  openCvPreview = openCv;
   qs('#cv-close').addEventListener('click', () => modal.close());
   modal.addEventListener('click', event => {
     if (event.target === modal) modal.close();
@@ -226,6 +240,176 @@ function setupNavbar() {
   }, { passive: true });
   update();
 }
+function setupLaunch() {
+  const launchBtn = qs('#launch-btn');
+  const overlay = qs('#launch-overlay');
+  if (!launchBtn || !overlay) return;
+  const canvas = qs('#starfield');
+  const ctx = canvas ? canvas.getContext('2d') : null;
+  const countdown = qs('#countdown');
+  const exitBtn = qs('#orbit-exit');
+  const rocket = qs('#mission-rocket');
+  const padRocket = qs('.pad-rocket');
+  const sourceSvg = rocket ? rocket.querySelector('svg') : null;
+  if (padRocket && sourceSvg) padRocket.append(sourceSvg.cloneNode(true));
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let timers = [];
+  let raf = null;
+  let stars = [];
+  let meteor = null;
+  let ascent = false;
+  let width = 0;
+  let height = 0;
+  const later = (fn, ms) => timers.push(setTimeout(fn, ms));
+  const clearTimers = () => {
+    timers.forEach(timer => clearTimeout(timer));
+    timers = [];
+  };
+  const resize = () => {
+    width = window.innerWidth;
+    height = window.innerHeight;
+    if (!ctx) return;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = width * dpr;
+    canvas.height = height * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  };
+  const makeStars = () => {
+    const count = Math.min(240, Math.round((width * height) / 7000));
+    stars = Array.from({ length: count }, () => ({
+      x: Math.random(),
+      y: Math.random(),
+      depth: 0.3 + Math.random() * 0.7,
+      size: 0.5 + Math.random() * 1.3,
+      twinkle: Math.random() * Math.PI * 2,
+      speed: 0.4 + Math.random() * 1.2
+    }));
+  };
+  const draw = () => {
+    if (!ctx) return;
+    ctx.clearRect(0, 0, width, height);
+    const palette = ['#ffffff', '#f5f3ed', '#cfd8e3'];
+    stars.forEach((star, i) => {
+      star.twinkle += 0.02 * star.speed;
+      if (ascent) {
+        star.y += (16 * star.depth) / height;
+        if (star.y > 1.02) { star.y = -0.03; star.x = Math.random(); }
+      } else {
+        star.y += (0.14 * star.depth) / height;
+        if (star.y > 1.02) { star.y = -0.02; star.x = Math.random(); }
+      }
+      const px = star.x * width;
+      const py = star.y * height;
+      ctx.globalAlpha = 0.3 + Math.abs(Math.sin(star.twinkle)) * 0.65 * star.depth;
+      ctx.fillStyle = palette[i % palette.length];
+      if (ascent) {
+        const len = 14 * star.depth;
+        ctx.fillRect(px, py - len, star.size * star.depth + 0.5, len + star.size);
+      } else {
+        ctx.beginPath();
+        ctx.arc(px, py, star.size * star.depth, 0, 7);
+        ctx.fill();
+      }
+    });
+    if (!ascent) {
+      if (!meteor && Math.random() < 0.005) {
+        meteor = { x: 0.25 + Math.random() * 0.6, y: Math.random() * 0.25, vx: 0.5 + Math.random() * 0.4, vy: 0.28 + Math.random() * 0.25, life: 1 };
+      }
+      if (meteor) {
+        meteor.x += meteor.vx / 60;
+        meteor.y += meteor.vy / 60;
+        meteor.life -= 0.016;
+        const mx = meteor.x * width;
+        const my = meteor.y * height;
+        const tail = 90 * meteor.life;
+        const gradient = ctx.createLinearGradient(mx, my, mx - tail * meteor.vx, my - tail * meteor.vy);
+        gradient.addColorStop(0, 'rgba(245,243,237,.9)');
+        gradient.addColorStop(1, 'rgba(245,243,237,0)');
+        ctx.globalAlpha = Math.max(meteor.life, 0);
+        ctx.strokeStyle = gradient;
+        ctx.lineWidth = 1.4;
+        ctx.beginPath();
+        ctx.moveTo(mx, my);
+        ctx.lineTo(mx - tail * meteor.vx, my - tail * meteor.vy);
+        ctx.stroke();
+        if (meteor.life <= 0 || mx < -120 || my > height + 120) meteor = null;
+      }
+    }
+    ctx.globalAlpha = 1;
+    raf = requestAnimationFrame(draw);
+  };
+  const tick = text => {
+    countdown.textContent = text;
+    countdown.classList.remove('tick');
+    void countdown.offsetWidth;
+    countdown.classList.add('tick');
+  };
+  const reachOrbit = () => {
+    ascent = false;
+    overlay.classList.add('orbit');
+  };
+  const liftoff = () => {
+    tick('LIFTOFF');
+    overlay.classList.add('flame-on');
+    overlay.classList.add('lift-off');
+    ascent = true;
+    later(reachOrbit, 2300);
+  };
+  const open = () => {
+    clearTimers();
+    if (rocket) rocket.style.transition = 'none';
+    overlay.classList.remove('orbit', 'lift-off', 'flame-on');
+    if (rocket) void rocket.offsetWidth;
+    if (rocket) rocket.style.transition = '';
+    countdown.classList.remove('tick');
+    overlay.classList.add('open');
+    overlay.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    resize();
+    makeStars();
+    meteor = null;
+    if (ctx) {
+      if (raf) cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(draw);
+    }
+    exitBtn.focus();
+    if (reduced) {
+      later(reachOrbit, 700);
+      return;
+    }
+    later(() => tick('3'), 750);
+    later(() => tick('2'), 1600);
+    later(() => tick('1'), 2450);
+    later(liftoff, 3300);
+  };
+  const close = () => {
+    clearTimers();
+    overlay.classList.remove('open', 'orbit', 'lift-off', 'flame-on');
+    overlay.setAttribute('aria-hidden', 'true');
+    countdown.classList.remove('tick');
+    document.body.style.overflow = '';
+    if (rocket) {
+      rocket.style.transition = 'none';
+      void rocket.offsetWidth;
+      rocket.style.transition = '';
+    }
+    if (raf) {
+      cancelAnimationFrame(raf);
+      raf = null;
+    }
+    launchBtn.focus();
+  };
+  launchBtn.addEventListener('click', open);
+  exitBtn.addEventListener('click', close);
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && overlay.classList.contains('open')) close();
+  });
+  window.addEventListener('resize', () => {
+    if (!overlay.classList.contains('open')) return;
+    resize();
+    makeStars();
+  });
+}
 function enableMotion() {
   if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     document.documentElement.classList.add('anim-ready');
@@ -307,6 +491,7 @@ async function init() {
   setupNavbar();
   setupProjectModal();
   setupCvModal();
+  setupLaunch();
   qs('#year').textContent = new Date().getFullYear();
   try {
     const response = await fetch('./data/content.json', { cache: 'no-store' });
