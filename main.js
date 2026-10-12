@@ -26,6 +26,7 @@ function renderProfile(profile) {
   about.replaceChildren(...profile.about.map(paragraph => create('p', '', paragraph)));
   const links = qs('#contact-links');
   if (profile.email) links.append(externalLink(`mailto:${profile.email}`, 'Email ↗'));
+  if (profile.whatsapp) links.append(externalLink(`https://wa.me/${profile.whatsapp}`, 'WhatsApp ↗'));
   if (profile.github) links.append(externalLink(profile.github, 'GitHub ↗'));
   if (profile.linkedin) links.append(externalLink(profile.linkedin, 'LinkedIn ↗'));
   if (profile.resume) links.append(externalLink(profile.resume, 'Résumé ↗'));

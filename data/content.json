@@ -10,8 +10,9 @@
       "I'm a software engineer with a backend focus and professional experience across product development and system integrations. My work has included REST APIs, payment gateways, scheduled jobs, and internal platforms.",
       "I enjoy the less visible side of software: making services predictable, maintaining clear boundaries, and helping teams ship features that are reliable beyond the first release."
     ],
-    "email": "",
-    "github": "",
+    "email": "risky.mpangestu@gmail.com",
+    "github": "https://github.com/pangestu-k",
+    "whatsapp": "6281315006236",
     "linkedin": "https://www.linkedin.com/in/muhammad-rizky-pangestu-691a28276/",
     "resume": "",
     "photo": ""
@@ -55,15 +56,18 @@
     }
   ],
   "skills": [
-    {"label": "Languages", "items": ["Go", "PHP", "JavaScript"]},
-    {"label": "Backend", "items": ["Gin", "Echo", "GORM", "Laravel", "Express.js", "Node.js", "REST APIs"]},
-    {"label": "Frontend", "items": ["React", "Livewire", "Tailwind CSS", "Bootstrap", "Chakra UI"]},
-    {"label": "Ways of working", "items": ["Git", "Team collaboration", "API integration", "Payment gateway integration"]}
+    {"label": "AI / LLM", "items": ["LLM Agent", "Tool Calling", "Text-to-SQL", "LLM API Integration", "Structured Data Extraction", "AI-Assisted Development"]},
+    {"label": "Languages", "items": ["Golang", "TypeScript", "JavaScript", "SQL", "PHP"]},
+    {"label": "Backend", "items": ["Node.js", "Express.js", "Fiber", "Gin", "Hono", "Echo", "REST API", "Laravel", "Livewire"]},
+    {"label": "Databases", "items": ["PostgreSQL", "MongoDB", "MySQL", "SQL Server", "Supabase"]},
+    {"label": "Frontend", "items": ["React", "Svelte", "Next.js", "Vite", "TanStack", "Tailwind CSS", "Ant Design", "shadcn/ui", "Chakra UI"]},
+    {"label": "Cloud & DevOps", "items": ["VPS Administration", "Nginx", "systemd", "Dokploy", "Docker", "Self-hosted Deployment", "Umami Analytics"]}
   ],
   "projects": [],
   "education": [
-    {"school": "STTI NIIT (I-Tech)", "program": "Software Engineering", "period": "2021 — 2026"},
-    {"school": "SMK Wikrama 1 Garut", "program": "Vocational education", "period": "2018 — 2021"}
+    {"school": "STTI NIIT (I-Tech)", "program": "Informatics Engineering", "period": "2025 — 2026"},
+    {"school": "STIE Dharma Negara", "program": "Informatics Engineering", "period": "2021 — 2025"},
+    {"school": "SMK Wikrama 1 Garut", "program": "Software Engineering", "period": "2018 — 2021"}
   ],
   "recognition": []
 }
