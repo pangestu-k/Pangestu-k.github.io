@@ -201,7 +201,44 @@ function setupNavbar() {
   }, { passive: true });
   update();
 }
+function enableMotion() {
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.documentElement.classList.add('anim-ready');
+  }
+}
+function setupReveal() {
+  if (!document.documentElement.classList.contains('anim-ready') || !('IntersectionObserver' in window)) return;
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const el = entry.target;
+      const delay = parseFloat(el.style.getPropertyValue('--rd')) || 0;
+      el.classList.add('in-view');
+      observer.unobserve(el);
+      setTimeout(() => {
+        el.removeAttribute('data-reveal');
+        el.classList.remove('in-view');
+        el.style.removeProperty('--rd');
+      }, 850 + delay);
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+  const watch = (el, index) => {
+    if (!el) return;
+    el.setAttribute('data-reveal', '');
+    el.style.setProperty('--rd', `${Math.min((index || 0) * 70, 350)}ms`);
+    observer.observe(el);
+  };
+  ['.section-heading', '.section-content', '.additional-block', '.contact-layout'].forEach(selector => {
+    document.querySelectorAll(selector).forEach(el => watch(el));
+  });
+  [['#experience-list', '.experience-item'], ['#projects-list', '.project-card, .empty-projects'], ['#skills-list', '.skill-group']].forEach(([parentSelector, itemSelector]) => {
+    const container = qs(parentSelector);
+    if (!container) return;
+    Array.from(container.querySelectorAll(itemSelector)).forEach((el, i) => watch(el, i));
+  });
+}
 async function init() {
+  enableMotion();
   setupTheme();
   setupNavbar();
   setupProjectModal();
@@ -215,6 +252,7 @@ async function init() {
     renderProjects(data.projects || []);
     renderSkills(data.skills || []);
     renderEducation(data.education || [], data.recognition || []);
+    setupReveal();
   } catch (error) {
     console.error('Could not load portfolio content:', error);
     qs('#about-text').textContent = 'Portfolio content could not be loaded. Start a local server or verify data/content.json.';
